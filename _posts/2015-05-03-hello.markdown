@@ -1,0 +1,10 @@
+---
+layout: post
+title:  "你好!"
+date:   2015-05-03 00:00:00
+categories: hello
+tags: hello
+published: true
+---
+
+你好，世界！
