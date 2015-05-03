@@ -1,11 +1,11 @@
 # Site settings
 title: QIBING'S BLOG
-email: qbblog@gmail.com
+email: qbhust@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Code with fun.
   <br>Study with fun.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://yourdomain.com" # the base hostname & protocol for your site
+url: "http://qibing.me" # the base hostname & protocol for your site
 twitter_username: qbhust
 github_username:  qibingX
 
