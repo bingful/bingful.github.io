@@ -12,10 +12,15 @@ Memcached客户端和服务端之间的通讯协议是基于TCP或UDP之上的�
 
 ## TCP协议接口 ##
 
+客户端和服务端之间使用TCP连接来发送请求和返回响应，除了数据字段之外，命令和参数都是文本，这和HTTP的body可以是二进制，但是header是文本行是类似的；并且，mc命令也以\r\n结束
+
 ### 存储命令 ###
 
     <command name> <key> <flags> <exptime> <bytes> [noreply]\r\n
+    <data>\r\n
+
     cas <key> <flags> <exptime> <bytes> <cas unique> [noreply]\r\n
+    <data>\r\n
 
 
 * \<command name\>可以是："set", "add", "replace", "append" or "prepend"
@@ -26,9 +31,9 @@ Memcached客户端和服务端之间的通讯协议是基于TCP或UDP之上的�
 
      replace: 仅在key存在的情况下存储
 
-     append: 将数据追加到**存在的**key的数据后面
+     append: 将数据追加到***存在的***key的数据后面
 
-     prepend: 将数据前置到**存在的**key的数据前面
+     prepend: 将数据前置到***存在的***key的数据前面
 
      **cas**: 存储数据，仅在自上次获取该数据之后 数据没被修改的情况下
 
@@ -109,7 +114,9 @@ args例如:
 
 ## UDP协议接口 ##
 
-udp数据报包含一个简单的frame header，后接TCP协议一样的数据格式。
+MC客户端和服务端的通讯也可以使用udp协议。udp数据报包含一个简单的frame header，后接TCP协议一样的数据格式。
+
+frame header的作用相当于是在应用层实现了简单的数据可靠性和有序性保证。
 
 frame header长度8个字节，包含4个值，每个值都是16位整数，网络字节序，high byte first。
 
@@ -122,5 +129,11 @@ Request ID是客户端选取的任意值，一般是从一个随机种子开始�
 
 Sequnce Number是0至n-1，n是该消息的总共的数据报个数，即第三个值。客户端用顺序号拼接正确的响应数据，响应数据和TCP响应格式相同。
 
+frame header之后的数据格式和tcp协议一样。
+
+
+## 感想 ##
+
+Memcached协议 简单，容易理解，实现一个客户端也不是很复杂，不过目前PHP已经有很好的客户端了，那就是pecl-memcached扩展, 它是以libmemcached为基础的。
 
 
