@@ -1,0 +1,43 @@
+---
+layout: post
+title:  "MySQL SQL语句备忘"
+date:   2013-12-18 12:48:30
+categories: mysql
+tags: mysql sql
+---
+### 迪卡尔积 ###
+
+mysql中join, cross join, inner join语义是一样，都是迪卡尔积。
+
+{% highlight sql %}
+select * from a, b;
+select * from a [cross|inner] join b;
+{% endhighlight %}
+
+### 笛卡尔积指定连接条件 ###
+
+{% highlight sql %}
+select * from a inner join b on a.ano=b.bno;
+{% endhighlight %}
+
+### 左外连接 ###
+
+迪卡尔积，然后过滤出满足条件a.ano=b.bno的行，然后添加上左表不符合条件的单独行 相应右表的列为NULL
+
+{% highlight sql %}
+select * from a left  [outer] join b on a.ano=b.bno;     
+{% endhighlight %}
+
+### 右外连接 ###
+
+迪卡尔积，然后过滤出满足条件a.ano=b.bno的行，然后添加上右表不符合条件的单独行 相应左表的列为NULL
+
+{% highlight sql %}
+select * from a right [outer] join b on a.ano=b.bno;     
+{% endhighlight %}
+
+### ON和WHERE的区别 ###
+
+* ON：连接的时候指定连接条件
+* WHERE：用于用户限制所选取的列
+
