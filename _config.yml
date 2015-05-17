@@ -9,7 +9,7 @@ url: "http://qibing.me" # the base hostname & protocol for your site
 weibo_username: hustqibing
 weibo_nickname: 祁冰hust
 twitter_username: qbhust
-github_username:  qibingX
+# github_username:  qibingX
 
 # Build settings
 markdown: kramdown
