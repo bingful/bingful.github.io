@@ -75,5 +75,11 @@ $ curl --header "Content-Type:application/json" http://example.com
 $ curl --user name:password example.com
 {% endhighlight %}
 
+14.查看https延时
 
+http和https都是建立在tcp协议之上，可以用以下命令查看tcp握手延时和ssl握手延时
 
+{% highlight bash %}
+$ curl -w "TCP handshake: %{time_connect}, SSL handshake: %{time_appconnect}\n" -so /dev/null https://www.baidu.com
+TCP handshake: 0.018, SSL handshake: 0.067
+{% endhighlight %}
