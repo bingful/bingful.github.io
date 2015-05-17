@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "CURL命令用法备忘"
-date:   2015-05-13 00:00:00
+date:   2014-05-13 00:00:00
 categories: linux
 tags: linux curl
 ---
