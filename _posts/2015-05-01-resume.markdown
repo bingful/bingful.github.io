@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "My Resume"
-date:   2015-05-17 00:00:00
+date:   2015-05-01 00:00:00
 categories: qibing
 published: false
 ---
@@ -11,21 +11,21 @@ published: false
 - **祁冰** *Qi Bing* / 男 / 1989
 - 户籍 湖北
 - 本科 华中科技大学
-- 联系方式 13381444126 (北京) <qbhust@gmail.com>
-- 博客 <http://祁冰.cn/>
+- 联系方式 <qbhust@gmail.com> 13381444126(北京) 
+- 博客 <http://祁冰.cn>
 - Github <https://github.com/qibingX>
 
 ## 求职意向
 
-PHP, C
+PHP开发
 
 ## 个人简介
 
 三年PHP开发经验
 
-PHP Web后端开发
+支付系统设计/开发/维护
 
-支付服务系统设计和开发
+开发过一个简单的PHP MVC框架[Drizzle](https://github.com/qibingX/drizzle)
 
 ## 教育背景
 
@@ -34,10 +34,10 @@ PHP Web后端开发
 
 ## 专业技能
 
-- 熟悉第三方支付原理和接入，能独立进行大型支付系统(支付服务+业务方接入)设计
+- 熟悉第三方支付原理和接入，能独立进行大型支付系统(支付服务/业务方接入)设计和开发
 - 熟悉PHP开发，熟悉LNMP环境
-- PHP框架开发
-- 熟悉Linux常用操作, Shell脚本, 熟练使用Vim
+- 设计和开发PHP MVC框架
+- 熟悉Linux Shell操作
 - 熟悉C语言, 了解C++
 
 ## 工作经历
