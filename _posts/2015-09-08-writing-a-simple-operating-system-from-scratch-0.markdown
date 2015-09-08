@@ -4,7 +4,7 @@ title:  "【译】从零开始写一个简单的操作系统 - 序言"
 date:   2015-09-08 23:47:00
 categories: osdev
 tags: os 操作系统 assembly 汇编 bootloader 
-published: false
+#published: false
 ---
 一直以来，我都对系统底层非常有兴趣，计算机系统从通电到BIOS自检，从bootloader到加载kernel，从系统驱动到上层界面，这个过程让我非常着迷。我发现一份很好的资料，伯乐在线有过头条[推荐][jobbole]，作者是英国伯明翰大学计算机学院教师 Nick Blundel。
 
