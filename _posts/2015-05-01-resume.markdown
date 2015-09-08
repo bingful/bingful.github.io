@@ -3,7 +3,7 @@ layout: post
 title:  "My Resume"
 date:   2015-05-01 00:00:00
 categories: qibing
-published: false
+published: true
 ---
 
 ## 个人信息
