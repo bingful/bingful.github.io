@@ -10,11 +10,17 @@ tags: os 操作系统 assembly 汇编 bootloader
 
 我将这份PDF完整学习了一遍，并且译了一个中文版。
 
-Chapter 1   [Introduction][]
-Chapter 2   [计算机结构和启动过程][]
-Chapter 3   [启动扇区编程（在16位实模式环境下）][]
-Chapter 4   [进入32位保护模式][]
-Chapter 5   [内核的编写、构建和加载][]
-Chapter 6   [开发必需的设备驱动和文件系统][]
+Chapter 1   [Introduction][ch1]
+Chapter 2   [计算机结构和启动过程][ch2]
+Chapter 3   [启动扇区编程（在16位实模式环境下）][ch3]
+Chapter 4   [进入32位保护模式][ch4]
+Chapter 5   [内核的编写、构建和加载][ch5]
+Chapter 6   [开发必需的设备驱动和文件系统][ch6]
 
 [jobbole]:      http://top.jobbole.com/13810/
+[ch1]:          /osdev/writing-a-simple-operating-system-from-scratch-1/
+[ch2]:          /osdev/writing-a-simple-operating-system-from-scratch-2/
+[ch3]:          /osdev/writing-a-simple-operating-system-from-scratch-3/
+[ch4]:          /osdev/writing-a-simple-operating-system-from-scratch-4/
+[ch5]:          /osdev/writing-a-simple-operating-system-from-scratch-5/
+[ch6]:          /osdev/writing-a-simple-operating-system-from-scratch-6/
