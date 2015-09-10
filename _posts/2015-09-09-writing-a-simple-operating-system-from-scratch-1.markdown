@@ -40,7 +40,10 @@ Chapter 6   [【译】开发必需的设备驱动和文件系统][ch6]
 
 * 怎样创建一些基本的操作系统服务，比如设备驱动、文件系统、多任务处理
 
-待续……
+请注意，至于实际的操作系统功能，这份教程不打算在这方面展开，而是专注于将从各种渠道和资源而来的信息碎片聚合为一个自给型的、连贯的文档，会带给你底层编程的动手体验，体验操作系统是如何编写，弄明白它解决了什么问题。这份教程手法独特，因为它使用的语言和工具（例如汇编、C语言、Make工具等）不是我们关心的核心，而是达到目标的手段：我们将学习这些语言和工具中我们需要的部分来帮助实现我们的主要目标。
+
+这个项目定位于敲门砖，而非替代譬如优秀的[Minix Project][minix3]和通用的操作系统开发。
+
 
 [ch1]:          /osdev/writing-a-simple-operating-system-from-scratch-1/
 [ch2]:          /osdev/writing-a-simple-operating-system-from-scratch-2/
@@ -48,3 +51,4 @@ Chapter 6   [【译】开发必需的设备驱动和文件系统][ch6]
 [ch4]:          /osdev/writing-a-simple-operating-system-from-scratch-4/
 [ch5]:          /osdev/writing-a-simple-operating-system-from-scratch-5/
 [ch6]:          /osdev/writing-a-simple-operating-system-from-scratch-6/
+[minix3]:       http://www.minix3.org/
