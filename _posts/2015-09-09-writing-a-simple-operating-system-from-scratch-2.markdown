@@ -25,7 +25,7 @@ tags: os 操作系统 assembly 汇编 bootloader
 
 译者：祁冰
 
-
+翻译中……
 
 
 [ch1]:          /osdev/writing-a-simple-operating-system-from-scratch-1/
