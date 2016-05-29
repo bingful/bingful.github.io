@@ -6,10 +6,10 @@ description: > # this means to ignore newlines until "baseurl:"
   <br>Study with fun.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://qibing.me" # the base hostname & protocol for your site
-weibo_username: hustqibing
-weibo_nickname: 祁冰hust
-twitter_username: qbhust
-github_username:  qibingX
+weibo_username: 133814126
+weibo_nickname: biwing
+twitter_username: biwing
+github_username: biwing
 
 # Build settings
 markdown: kramdown
