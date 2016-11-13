@@ -1,15 +1,15 @@
 # Site settings
 title: QIBING'S BLOG
-email: qbhust@gmail.com
+email: bingful@yeah.net
 description: > # this means to ignore newlines until "baseurl:"
   Code with fun.
   <br>Study with fun.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://qibing.me" # the base hostname & protocol for your site
 weibo_username: 133814126
-weibo_nickname: biwing
-twitter_username: biwing
-github_username: biwing
+weibo_nickname: bingful
+twitter_username: bingful
+github_username: bingful
 
 # Build settings
 markdown: kramdown
