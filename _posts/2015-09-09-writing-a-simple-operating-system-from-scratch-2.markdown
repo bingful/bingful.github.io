@@ -1,37 +1,72 @@
 ---
 layout: post
-title:  "【译】Chapter 2 计算机结构和启动过程"
+title: "【译】《从零开始写一个简单的操作系统》 - 第二章 计算机体系结构和启动过程"
 date:   2015-09-11 00:58:00
 categories: osdev
 tags: os 操作系统 assembly 汇编 bootloader 
 #published: false
 ---
 
-### 目录 ###
+## 目录 ##
 
-[【译】Chapter 1 Introduction][ch1]
+[【译】《从零开始写一个简单的操作系统》 - 译序][ch0]
 
-[【译】Chapter 2 计算机结构和启动过程][ch2]
+[【译】《从零开始写一个简单的操作系统》 - 第一章 引言][ch1]
 
-[【译】Chapter 3 启动扇区编程（在16位实模式环境下）][ch3]
+[【译】《从零开始写一个简单的操作系统》 - 第二章 计算机体系结构和启动过程][ch2]
 
-[【译】Chapter 4 进入32位保护模式][ch4]
+[【译】《从零开始写一个简单的操作系统》 - 第三章 16位实模式下启动扇区程序设计][ch3]
 
-[【译】Chapter 5 内核的编写、构建和加载][ch5]
+[【译】《从零开始写一个简单的操作系统》 - 第四章 切换到32位保护模式][ch4]
 
-[【译】Chapter 6 开发必需的设备驱动和文件系统][ch6]
+[【译】《从零开始写一个简单的操作系统》 - 第五章 编写、编译并加载内核][ch5]
+
+[【译】《从零开始写一个简单的操作系统》 - 第六章 开发必要的设备驱动和文件系统][ch6]
 
 作者：Nick Blundel
 
 译者：祁冰
 
-翻译中……
+### 启动过程 ###
+
+现在开始我们的探险之旅吧。
+
+当我们重启计算机时，它会重新启动一次，启动一开始计算机是没有操作系统的概念的。随后，不论以何种形式，计算机将从连接的永久存储设备上加载操作系统。这些设备包括软盘、硬盘、USB等等。
+
+我们稍后就会看到，操作系统加载之前的环境，仅提供了非常至少的功能，甚至连简单的文件系统（逻辑文件的读写）都是奢谈。幸运的是，我们有BIOS（基本输入输出系统），它是一些列例程的集合（译注：例程的概念，可以理解为一段实现特定功能的指令）。在计算机通电时BIOS被从主板上的芯片加载到内存中，并完成初始化。BIOS提供了对计算机基础外接设备的自动检测和基本控制，这些设备包括显示器、键盘、硬盘等。
+
+当BIOS完成了对硬件的底层检测，特别是检测内存能否正常工作之后，它将执行权交给操作系统，而操作系统是储存在外接的某个存储设备上的。这里，要提醒一下，BIOS无法简单地从磁盘上加载一个代表操作系统的文件，因为这时候连文件系统都没有咧！BIOS只能从磁盘上读取指定物理位置、指定扇区的数据。一个扇区通常是512个字节大小。例如，指定BIOS读取2号柱面、3号磁头的第5个扇区。磁盘寻址方式将在后面详细讨论，见XXX节（译者注：作者的PDF就是这个写的"in Section XXX"，读者自行找下吧，或者按顺序阅读）。
+
+那么，BIOS最容易找到OS的地方，自然是磁盘的第一个扇区了（例如0号柱面，0号磁头，0号扇区），这个扇区就是大名鼎鼎的启动扇区（boot sector）。但是咧，计算机可以连多个磁盘设备，有些磁盘是没有装操作系统的，仅作为附加的存储之用。那么BIOS需要有一个方法识别某个磁盘的启动扇区中是可执行的代码，还是仅仅是不可执行的数据。注意，CPU对代码和数据不会区别对待，这两者是人根据用途而起的名字，在CPU看来，他们都是二进制的0和1序列，都能被解析为CPU指令，只不过代码是程序员精心编制的指令序列罢了。
+
+### BIOS、引导块和魔数 ###
+类似TextPad或GHex之类的二进制编辑器可以让我们向文件里直接写入原始的字节值，而不是像标准文本编辑器那样将'A'这样的字符转换成ASCII码再写入，通过这种方式我们能自己动手写一个简单但是可运行的启动扇区。
+
+`
+e9 fd ff 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+*
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 55 aa
+`
+图表2.1 启动扇区机器码，每个字节以16进制形式显示
+
+注意，在图表2.1中，有三个重要特征：
+
+* 开头的三个字节0xe9 0xfd 0xff实际上是机器码指令，它是由CPU厂商定义的，执行无限次跳转
+
+* 结尾的两个字节0x55 0xaa就是所谓的魔数，其作用在于告诉BIOS这个扇区是引导块，而不是数据
+
+* 这块区域用0填充（"*"表示为简便起见而忽略的0），以使Magic魔数存储于512字节长度的扇区的末尾
+
+请注意字节序！你可能在嘀咕，为什么在前面我们说BIOS魔数是16位的0xaa55，但是在这个启动扇区里却是两个连续的字节0x55和0xaa。这是因为x86体系结构使用小端序来处理多字节值，也就是低位字节在高位字节前面，这与我们熟悉的数字体系刚好是反的。如果我们的数字体系反过来而且我口袋里有了0000005英镑，我现在就可以退休了，或许还能给...
 
 
-[ch1]:          /osdev/writing-a-simple-operating-system-from-scratch-1/
-[ch2]:          /osdev/writing-a-simple-operating-system-from-scratch-2/
-[ch3]:          /osdev/writing-a-simple-operating-system-from-scratch-3/
-[ch4]:          /osdev/writing-a-simple-operating-system-from-scratch-4/
-[ch5]:          /osdev/writing-a-simple-operating-system-from-scratch-5/
-[ch6]:          /osdev/writing-a-simple-operating-system-from-scratch-6/
-[minix3]:       http://www.minix3.org/
+
+[jobbole]:      http://top.jobbole.com/13810/
+[ch0]:          /osdev/writing-a-simple-operating-system-from-scratch-0
+[ch1]:          /osdev/writing-a-simple-operating-system-from-scratch-1
+[ch2]:          /osdev/writing-a-simple-operating-system-from-scratch-2
+[ch3]:          /osdev/writing-a-simple-operating-system-from-scratch-3
+[ch4]:          /osdev/writing-a-simple-operating-system-from-scratch-4
+[ch5]:          /osdev/writing-a-simple-operating-system-from-scratch-5
+[ch6]:          /osdev/writing-a-simple-operating-system-from-scratch-6
