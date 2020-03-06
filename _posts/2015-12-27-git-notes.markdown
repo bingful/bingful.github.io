@@ -1,0 +1,94 @@
+---
+layout: post
+title:  "Git 笔记"
+date:   2015-12-27 01:32:00
+categories: linux
+tags: git linux
+---
+
+git笔记
+
+	git init 本地初始化一个repo
+	git remote add origin ...   // 连接本地repo和远程repo
+	git add 加入暂存区
+
+Diff命令
+
+	git diff <file>             // 显示diff: 当前(working dir) vs 暂存区(stage)
+	git diff --staged <file>    // 显示diff: 暂存区(stage) vs 最近一次提交(head)
+	git diff HEAD <file>        // 显示diff: 当前(working dir) vs 最近一次提交(head)
+
+	git diff --stat             // 只显示被修改的文件列表, --stat可以和以上三种命令合起来用(git diff, git diff --staged, git diff HEAD)
+	git diff --word-diff        // 普通的diff显示的是行级别的差异，--word-diff显示单词级别的差异，可以和以上三个命令合用
+	git diff --color-words      // 类似--word-diff, 红色表示被删除的单词，绿色表示增加的单词。可以和以上三个命令合用
+
+提交记录
+
+	git log
+	git log --oneline       // 精简信息，一个提交一行
+	git log --stat          // 显示提交message+文件列表
+	git log --oneline --stat    // 精简信息+文件列表
+	git log --patch         // 比较内容，显示提交信息+文件差异，可以与--oneline、--stat合用
+	git log --patch --oneline
+	git log --patch --stat
+	git log --patch --oneline --stat
+
+	git log --graph
+	git log --graph --all --decorate --oneline  // 有用的命令
+
+如何删除一个文件
+
+	方法一：git rm <filename>   // 会从文件系统删除文件并暂存删除动作。若需真正删除需要再commit
+
+	方法二：rm <filename> && git rm <filename> // 效果同上
+
+	方法三：rm <filename> && git add <filename> // 效果同上
+
+不同于git rm效果的命令：
+
+	git rm --cached <filename> // 暂存删除动作，并且在文件系统保留该文件(成为一个untracked file)
+
+移动一个文件
+
+	方法一：git mv <old_file> <new_file>    // git进行移动，并暂存移动动作
+	方法二：mv <old_file> <new_file> && git rm <old_file> && git add <new_file> // 此种情况git会自动识别为属于移动,并且做暂存（经过实测，只要<new_file>和<old_file>内容完全相同，git就会识别为移动的)
+	方法三：mv <old_file/dir> <new_file/dir> && git add -A . // 效果同上一条命令，git自动识别为移动的，并且暂存移动动作
+
+	// 经过移动之后，如果直接:git log <new_file>查看新文件的提交记录，只能看到mv之后的历史，看不到old_file的历史，如何解决这个问题呢？请看下面的命令
+	git log --stat -M --follow -- <new_file>
+	// 解释：git默认会使用50%的相似度来做关联，如果相似度大于50%就认为是一个mv而不是(delete+add)
+
+checkout的作用
+
+	git checkout  <branch_name>     // 切换到某个分支
+	git checkout 881bfd7            // 切换到历史上某一个提交点
+	git checkout -- <filename>      // 放弃修改，恢复内容
+	git checkout -b <new_branch_name> // 新建一个branch并切换过去
+
+branch命令
+
+	git branch  // 显示所有的分支，当前分支前面显示一个*符号
+	git branch -r   // 显示remote tracking分支
+	git branch -d <branch_name>     // 删除某一个分支，注意无法删除当前你所在的分支哦
+
+merge分支合并
+
+	git merge <feature_branch_name> // 将feature_branch_name分支的代码/提交历史合并到当前分支。如果出现冲突，需要手工解决冲突，然后运行git commit
+	git merge --squash <feature_branch_name> // squash:挤压，即将<feature_branch_name>所有的变动当做一次commit合并到当前分支，也就是不带提交记录的合并
+
+远端
+
+	/** 注意： name_of_remote_dest是给远端起的一个名字，一般为origin */
+	git remote add <name_of_remote_dest> <url_of_remote_dest>       // 关联远端repo，远端url可以是file://或者http://或者https://等等协议
+	git remote set-url <name_of_remote_dest> <url_of_remote_dest>   // 修改远端repo的url
+	git remote rm <name_of_remote_dest> // 删除远端关联
+	git remote -v   // 显示远端url
+	git fetch <name_of_remote_dest> // 把远端repo的内容拉取到本地的远程追踪分支(git branch -r可以看到这些远程追踪分支)
+	git pull <name_of_remote_dest>  // 先做fetch, 然后merge到本地分支
+	git push <name_of_remote_dest>  // 把本地分支内容更新到远程追踪分支，然后推送到远端repo
+
+高级命令
+
+	git reset
+	git reflog
+	git rebase
